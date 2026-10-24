@@ -30,3 +30,15 @@ Desarrollar una interfaz en React y TypeScript para registrar y revisar solicitu
 
 ### D. Tsc --noEmit
 ![Marcar para Revisión](./images/noEmit.png)
+
+## 6. Explicación de Decisiones Conceptuales y Técnicas
+
+- **Diferencia entre props requeridas y opcionales:** 
+  Se implementó la prop `solicitud` como un contrato estrictamente requerido dentro de `RequestCard` para garantizar que la tarjeta posea todos los datos obligatorios del modelo de dominio. Por otro lado, se añadió la prop opcional `etiquetaSecundaria?: string` con un valor predeterminado (`'Estándar'`), lo que permite observar un comportamiento consistente incluso cuando el componente consumidor omite dicha propiedad.
+
+- **Tipado estricto de eventos del DOM:** 
+  Evitando el uso de `any`, se tiparon de forma explícita los eventos de interacción del usuario mediante interfaces nativas de React: `React.ChangeEvent<HTMLInputElement>` para el campo de texto, `React.ChangeEvent<HTMLSelectElement>` para el selector de categorías, y `React.FormEvent<HTMLFormElement>` para prevenir la recarga predeterminada en el envío del formulario.
+
+- **Uso de `children` como contenido normal y como función:** 
+  - *Como contenido normal (`React.ReactNode`):* Se empleó en el componente `WorkspaceSection` para encapsular y estructurar bloques genéricos de la interfaz (como el formulario de búsqueda y los resultados), logrando una composición flexible sin acoplar el contenedor al contenido específico.
+  - *Como función (Render Prop):* Se utilizó en `StatusIndicator` para aceptar una función hija que recibe dinámicamente el estado de procesamiento del componente padre (`isProcessing`), permitiendo renderizar mensajes de estado personalizados de manera limpia y reutilizable.
